@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>❤️‍🩹Heart Disease Prediction</h1>
+            <p>Input the required data to check your heart health status.</p>
+        </header>
+
+        {% if error %}
+            <div class="error-message">
+                <p>⚠️ {{ error }}</p>5
+            </div>
+        {% endif %}
+
+        <div class="form-section">
+            <form method="post" class="prediction-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn-submit">Predict</button>
+            </form>
+        </div>
+
+        {% if prediction is not None %}
+            <div class="result">
+                <h2>Prediction Result:</h2>
+                <p>
+                    {% if prediction == 0 %}
+                        🟢 No Heart Disease Detected
+                    {% elif prediction == 1 %}
+                        🔴 High Risk of Heart Disease
+                    {% endif %}
+                </p>
+            </div>
+        {% endif %}
+
+        <footer>
+            <p><strong>REMINDER: Always consult a physician for a professional diagnosis.</strong></p>
+        </footer>
+    </div>
+</body>
+</html>
